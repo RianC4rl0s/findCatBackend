@@ -57,8 +57,8 @@ public class UserController {
         return ResponseEntity.ok().body(userService.findUserById(id));
     }
     @GetMapping(path = "/username/{username}")
-    public ResponseEntity<User> getUserByUsernamePath(@PathVariable String username) {
-        return ResponseEntity.ok().body(userService.findByUsername(username));
+    public ResponseEntity<UserDto> getUserByUsernamePath(@PathVariable String username) {
+        return ResponseEntity.ok().body(mapper.map( userService.findByUsername(username),UserDto.class));
     }
  
     @GetMapping("/paged")
