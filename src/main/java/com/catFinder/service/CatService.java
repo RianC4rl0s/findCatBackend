@@ -19,6 +19,8 @@ import com.catFinder.exception.DataException;
 import com.catFinder.exception.UserNotFoundException;
 import com.catFinder.repositories.CatRepository;
 
+import jakarta.transaction.Transactional;
+
 
 
 @Service
@@ -43,6 +45,10 @@ public class CatService {
 
     public List<Cat> findAll() {
         return catRepository.findAll();
+    }
+    @Transactional
+    public List<Cat> findByUserId(Integer userID) {
+        return catRepository.findByUserId(userID);
     }
 
     public Page<CatDto> findAllPaged(PageRequest pageRequest) {

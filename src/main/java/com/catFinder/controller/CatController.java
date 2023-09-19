@@ -25,8 +25,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @RestController
@@ -42,6 +41,15 @@ public class CatController {
     @GetMapping
     public ResponseEntity<List<CatDto>> findAll(){
         List<Cat> catList = catService.findAll();
+        
+        List<CatDto> catDtos = catList.stream().map(cat -> mapper.map(cat, CatDto.class)).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(catDtos);
+    }
+    @Transactional
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<List<CatDto>> findByUserId(@PathVariable("id") Integer id){
+        List<Cat> catList = catService.findByUserId(id);
         
         List<CatDto> catDtos = catList.stream().map(cat -> mapper.map(cat, CatDto.class)).collect(Collectors.toList());
 
